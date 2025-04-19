@@ -1,13 +1,16 @@
-import React, { JSX } from 'react'
+import { JSX, useState } from 'react'
 import './App.css'
 import Header from './header'
 import Table from './table'
 
 function App(): JSX.Element {
+
+  const [productVal, setPdVal] = useState("")
+
   return (
     <div>
-      <Header />
-      <Table />
+       <Header onChange={setPdVal} productVal={productVal} />
+       <Table productVal={productVal} />
     </div>
   )
 }

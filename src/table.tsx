@@ -1,5 +1,36 @@
+import { useEffect, useState } from "react"
 
-function Table() {
+type Item = {
+    name: string
+    desc: string
+    value: number
+    valueType: string
+    calc: string
+}
+
+type JsonData = {
+    fixed: Item[]
+    pay: Item[]
+}
+
+type TableProps = {
+    productVal: string
+}
+
+function Table({ productVal }: TableProps) {
+
+    const [data, setData] = useState<JsonData | null>(null) // Estado para armazenar os dados.
+
+    // Listar variaveis de calculo.
+    useEffect(() => {
+
+        fetch("public/json/config.json").then(res => res.json()).then((json) => {
+
+            setData(json)
+
+        }).catch(err => { console.error("Erro ao carregar o JSON: ", err) })
+
+    }, [])
 
     return (
         <div className="he-tb">
@@ -11,46 +42,30 @@ function Table() {
                 <div className="cell amount">Valor</div>
             </div>
 
-            <div className="row">
-                <div className="cell">Raw Material</div>
-                <div className="cell">Cotton Thread</div>
-                <div className="cell amount">R$ 25.00</div>
-            </div>
+            {/* Exibindo os dados do 'fixed' */}
+            {data?.fixed.length === 0 ? (
+                <p>Sem custos fixos.</p>
+            ) : (
+                <div>
+                    {data?.fixed.map((item) => (
 
-            <div className="row">
-                <div className="cell">Labor</div>
-                <div className="cell">Seamstress</div>
-                <div className="cell amount">R$ 30.00</div>
-            </div>
+                        <div className="row">
+                            <div className="cell">{item.name}</div>
+                            <div className="cell">{item.desc}</div>
+                            <div className="cell amount">R$ {
+                                item.valueType == "%" ? (parseFloat(productVal) * (1 - (item.value / 100))).toFixed(2) :
+                                    item.calc == "add" ? parseFloat(productVal) + item.value :
+                                        parseFloat(productVal) - item.value}</div>
+                        </div>
 
-            <div className="row">
-                <div className="cell">Transport</div>
-                <div className="cell">Delivery</div>
-                <div className="cell amount">R$ 10.00</div>
-            </div>
-
-            <div className="row">
-                <div className="cell">Raw Material</div>
-                <div className="cell">Cotton Thread</div>
-                <div className="cell amount">R$ 25.00</div>
-            </div>
-
-            <div className="row">
-                <div className="cell">Labor</div>
-                <div className="cell">Seamstress</div>
-                <div className="cell amount">R$ 30.00</div>
-            </div>
-
-            <div className="row last">
-                <div className="cell">Transport</div>
-                <div className="cell">Delivery</div>
-                <div className="cell amount">R$ 10.00</div>
-            </div>
+                    ))}
+                </div>
+            )}
 
             <div className="price total">
                 <div className="cell">Preço sugerido de venda</div>
                 <div className="cell"></div>
-                <div className="cell amount">R$ 65.00</div>
+                <div className="cell amount">R$ 0.00</div>
             </div>
         </div>
     )
