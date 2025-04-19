@@ -2,21 +2,21 @@
     "fixed": [
         {
             "name": "Embalagem",
-            "desc":"Custo fixo da embalagem",
+            "desc":"Custo da embalagem",
             "value": 1,
             "valueType": "num",
             "calc": "add"
         },
         {
             "name": "Entrega",
-            "desc":"Custo pela entrega do produto",
+            "desc":"Custo pela entrega",
             "value": 3,
             "valueType": "num",
             "calc": "add"
         },
         {
             "name": "Custo por venda",
-            "desc":"Custo fixo por cada venda",
+            "desc":"Custo do (NuvemShop)",
             "value": 4.99,
             "valueType": "%",
             "calc": "sub"
@@ -32,14 +32,14 @@
         },
         {
             "name": "Boleto",
-            "desc":"",
+            "desc":"Boleto bancario",
             "value": 3.49,
             "valueType": "num",
             "calc": "sub"
         },
         {
             "name": "Pix",
-            "desc":"",
+            "desc":"Pix",
             "value": 0.99,
             "valueType": "%",
             "calc": "sub"

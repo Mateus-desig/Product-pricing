@@ -32,6 +32,9 @@ function Table({ productVal }: TableProps) {
 
     }, [])
 
+    productVal = "90"
+    let value = parseFloat(productVal)
+
     return (
         <div className="he-tb">
             <h2 className="title">Calculos de custo de produto</h2>
@@ -42,23 +45,28 @@ function Table({ productVal }: TableProps) {
                 <div className="cell amount">Valor</div>
             </div>
 
-            {/* Exibindo os dados do 'fixed' */}
-            {data?.fixed.length === 0 ? (
+            {/* Exibindo os dados do 'fixed' e 'pay' */}
+            {data?.fixed.length === 0 || data?.pay.length === 0 ? (
                 <p>Sem custos fixos.</p>
             ) : (
                 <div>
-                    {data?.fixed.map((item) => (
+                    {data?.fixed.concat(data?.pay).map((item) => {
 
-                        <div className="row">
-                            <div className="cell">{item.name}</div>
-                            <div className="cell">{item.desc}</div>
-                            <div className="cell amount">R$ {
-                                item.valueType == "%" ? (parseFloat(productVal) * (1 - (item.value / 100))).toFixed(2) :
-                                    item.calc == "add" ? parseFloat(productVal) + item.value :
-                                        parseFloat(productVal) - item.value}</div>
-                        </div>
+                        if (item.calc == "add") value = value + item.value
 
-                    ))}
+                        return (
+
+                            <div className="row">
+                                <div className="cell">{item.name}</div>
+                                <div className="cell">{item.desc} {item.valueType == "%" || item.calc == "sub" ? "-" : "+"} {item.valueType !== "%" ? "R$" : ""} {item.value.toFixed(2)}{item.valueType == "%" ? "%" : ""}</div>
+                                <div className="cell amount">R$ {
+                                    item.valueType == "%" ? (value * (1 - (item.value / 100))).toFixed(2) :
+                                        item.calc == "add" ? value.toFixed(2) :
+                                            (value - item.value).toFixed(2)}</div>
+                            </div>
+
+                        )
+                    })}
                 </div>
             )}
 
