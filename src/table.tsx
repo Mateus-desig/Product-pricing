@@ -6,6 +6,7 @@ type Item = {
     value: number
     valueType: string
     calc: string
+    all: boolean
 }
 
 type JsonData = {
@@ -69,6 +70,12 @@ function Table({ productVal }: TableProps) {
                     })}
                 </div>
             )}
+
+            <div className="row">
+                <div className="cell">Custo Bruto</div>
+                <div className="cell">Valor do Produto com tudo incluido</div>
+                <div className="cell amount">R$ {value.toFixed(2)}</div>
+            </div>
 
             <div className="price total">
                 <div className="cell">Preço sugerido de venda</div>

@@ -87,7 +87,12 @@
   border: 0;
 }
 .cell {
+  display: flex;
+  align-items: center;
   flex: 1;
+}
+.cell:last-child{
+  justify-content: end;
 }
 
 .amount {

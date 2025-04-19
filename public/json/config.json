@@ -19,7 +19,8 @@
             "desc":"Custo do (NuvemShop)",
             "value": 4.99,
             "valueType": "%",
-            "calc": "sub"
+            "calc": "sub",
+            "all": true
         }
     ],
     "pay": [
