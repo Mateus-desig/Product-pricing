@@ -126,7 +126,7 @@ function Table({ productVal }: TableProps) {
             <div className="price total">
                 <div className="cell">Preço sugerido de venda</div>
                 <div className="cell"></div>
-                <div className="cell amount">R$ 0.00</div>
+                <div className="cell amount">R$ {baseValue.toFixed(2)}</div>
             </div>
         </div>
     )

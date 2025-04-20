@@ -14,6 +14,7 @@ function Header({ productVal, onChange }: HeaderProps) {
     const handlerInput = (e: React.FormEvent<HTMLInputElement>) => {
 
         const val = e.currentTarget.value
+
         // Permitir apenas números e pontos.
         if (/^\d*\.?\d*$/.test(val) || val === "") {
             onChange(val)
@@ -23,7 +24,7 @@ function Header({ productVal, onChange }: HeaderProps) {
 
     // Evento de input para o campo "Porcentagem de lucro".
     const handleProfitPercentageChange = (e: React.FormEvent<HTMLInputElement>) => {
-        
+
         const val = e.currentTarget.value
 
         if (/^\d*\.?\d*$/.test(val) || val === "") {
@@ -44,32 +45,42 @@ function Header({ productVal, onChange }: HeaderProps) {
 
     return (
         <div className="he-ct">
-            <div className="title-he">Preço do produto</div>
+
             <div className="inputs">
-                <div className="ct-ip">
-                    <div className="type">R$</div>
-                    <input 
-                        className="pdt-vl" 
-                        type="text" 
-                        onInput={handlerInput} 
-                        value={productVal} 
-                        placeholder="Preço de produção do produto" 
-                    />
+
+                <div>
+                    <div className="title-he">Preço do produto</div>
+
+                    <div className="ct-ip">
+                        <div className="type">R$</div>
+                        <input
+                            className="pdt-vl"
+                            type="text"
+                            onInput={handlerInput}
+                            onFocus={() => setProfitPercentage("")}
+                            placeholder="Preço de produção do produto"
+                        />
+                    </div>
                 </div>
 
-                <div className="ct-ip">
-                    <div className="type">%</div>
-                    <input 
-                        className="pdt-pc" 
-                        type="text" 
-                        onInput={handleProfitPercentageChange} 
-                        value={profitPercentage} 
-                        placeholder="Porcentagem de lucro" 
-                    />
-                </div>
+                <div>
+                    <div className="title-he">Porcentagem de lucro</div>
+                    <div className="ct-ip">
+                        <div className="type">%</div>
+                        <input
+                            className="pdt-pc"
+                            type="text"
+                            onInput={handleProfitPercentageChange}
+                            value={profitPercentage}
+                            placeholder="Porcentagem de lucro"
+                        />
+                    </div>
 
+                </div>
             </div>
+
         </div>
+
     )
 }
 
