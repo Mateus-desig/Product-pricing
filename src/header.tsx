@@ -5,59 +5,51 @@ type HeaderProps = {
     onChange: (val: string) => void
 }
 
-function Header({ productVal, onChange }: HeaderProps) {
-
-    // Estado para controlar a porcentagem de lucro.
+function Header({ onChange }: HeaderProps) {
+    const [productionPrice, setProductionPrice] = useState<string>("")
     const [profitPercentage, setProfitPercentage] = useState<string>("")
 
-    // Evento de input para o campo "Preço de produção do produto".
-    const handlerInput = (e: React.FormEvent<HTMLInputElement>) => {
-
+    const handleProductionInput = (e: React.FormEvent<HTMLInputElement>) => {
         const val = e.currentTarget.value
 
-        // Permitir apenas números e pontos.
         if (/^\d*\.?\d*$/.test(val) || val === "") {
-            onChange(val)
+            setProductionPrice(val)
+            setProfitPercentage("")
+            onChange("") // limpa o valor final até colocar a porcentagem.
         }
-
+        
     }
 
-    // Evento de input para o campo "Porcentagem de lucro".
-    const handleProfitPercentageChange = (e: React.FormEvent<HTMLInputElement>) => {
-
+    const handleProfitInput = (e: React.FormEvent<HTMLInputElement>) => {
         const val = e.currentTarget.value
 
         if (/^\d*\.?\d*$/.test(val) || val === "") {
-
             setProfitPercentage(val)
 
-            // Calcular o valor final baseado no preço de produção e na porcentagem.
-            if (productVal && val !== "") {
-                const productionPrice = parseFloat(productVal)
+            if (productionPrice && val !== "") {
+                const base = parseFloat(productionPrice)
                 const profit = parseFloat(val)
-                const finalPrice = productionPrice + (productionPrice * profit / 100)
-                onChange(finalPrice.toFixed(2)) // Atualiza o preço final com 2 casas decimais.
+                const final = base + (base * profit / 100)
+                onChange(final.toFixed(2))
+            } else {
+                onChange("")
             }
-
         }
-
     }
 
     return (
         <div className="he-ct">
-
             <div className="inputs">
 
                 <div>
                     <div className="title-he">Preço do produto</div>
-
                     <div className="ct-ip">
                         <div className="type">R$</div>
                         <input
                             className="pdt-vl"
                             type="text"
-                            onInput={handlerInput}
-                            onFocus={() => setProfitPercentage("")}
+                            onInput={handleProductionInput}
+                            value={productionPrice}
                             placeholder="Preço de produção do produto"
                         />
                     </div>
@@ -70,13 +62,13 @@ function Header({ productVal, onChange }: HeaderProps) {
                         <input
                             className="pdt-pc"
                             type="text"
-                            onInput={handleProfitPercentageChange}
+                            onInput={handleProfitInput}
                             value={profitPercentage}
                             placeholder="Porcentagem de lucro"
                         />
                     </div>
-
                 </div>
+
             </div>
 
         </div>
